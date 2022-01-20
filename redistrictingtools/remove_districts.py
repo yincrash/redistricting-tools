@@ -2,6 +2,18 @@
 
 import argparse
 import csv
+import re
+
+def _parse_ranges(numbers: str):
+    for x in numbers.split(','):
+        x = x.strip()
+        if x.isdigit():
+            yield int(x)
+        elif '-' in x:
+            xr = x.split('-')
+            yield from range(int(xr[0].strip()), int(xr[1].strip())+1)
+        else:
+            raise ValueError(f"Unknown value specified: {x}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -13,7 +25,7 @@ def main():
     parser.add_argument(
         '--districts',
         type=str,
-        help="List of districts to remove separated by commas.")
+        help="List of districts to remove separated by commas. Can include ranges such as 1-10.")
     parser.add_argument(
         'output-blocks.csv',
         type=argparse.FileType('w'),
@@ -21,7 +33,7 @@ def main():
 
     args = parser.parse_args()
 
-    districts = args.districts.split(',')
+    districts = _parse_ranges(args.districts)
 
     with vars(args)['output-blocks.csv'] as outputFile, vars(args)['blocks.csv'] as inputFile:
         writer = csv.DictWriter(
@@ -35,4 +47,19 @@ def main():
                     'DISTRICT': row['DISTRICT'],
                     'BLOCKID' : row['BLOCKID']
                     })
+
+
+# Takes any ranges, expands them, and prepends them
+def expand_ranges(s):
+    return re.sub(
+        r'(\d+)-(\d+)',
+        lambda match: ','.join(
+            str(i) for i in range(
+                int(match.group(1)),
+                int(match.group(2)) + 1
+            )   
+        ),  
+        s
+    )
+
 main()

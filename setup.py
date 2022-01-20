@@ -7,7 +7,7 @@ long_description = "A set of tools to aid in creating US legislative district ma
 
 setup(
 		name ="redistricting-tools",
-		version ="0.0.2",
+		version ="0.0.4",
 		author ="Mike Yin",
 		author_email ="mikeyin@mikeyin.org",
 		url ="https://github.com/yincrash/redistricting-tools",

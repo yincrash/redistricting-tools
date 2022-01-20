@@ -30,3 +30,10 @@ Pull requests are welcome.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Deploy instructions
+
+```bash
+python3 setup.py bdist_wheel sdist
+twine upload dist/*
+```
