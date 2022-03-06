@@ -22,7 +22,7 @@ nest-districts [-h] blocks.csv nestings.csv output-senate-blocks.csv
 combine-districts [-h] source-one.csv source-two.csv output-blocks.csv
 
 # Remove districts from a map. Useful to create non-overlapping maps to combine using combine-districts
-remove-districts [-h] [--districts DISTRICTS] blocks.csv output-blocks.csv
+remove-districts [-h] (--remove REMOVE | --keep KEEP) blocks.csv output-blocks.csv
 ```
 
 ## Contributing
